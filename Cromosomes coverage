@@ -1,0 +1,52 @@
+# script for chromosomes coverage be bed coordinates. I don't know if anyone needs this. But it's funny to calculate this
+
+import sys
+
+
+# for i,j in genome.items():
+#     print(int(i[-4:-2])-11,j,sep=':',end=',\n')
+
+
+chr = dict()
+
+danRer11 = {1:59578282,
+2:59640629,
+3:62628489,
+4:78093715,
+5:72500376,
+6:60270059,
+7:74282399,
+8:54304671,
+9:56459846,
+10:45420867,
+11:45484837,
+12:49182954,
+13:52186027,
+14:52660232,
+15:48040578,
+16:55266484,
+17:53461100,
+18:51023478,
+19:48449771,
+20:55201332,
+21:45934066,
+22:39133080,
+23:46223584,
+24:42172926,
+25:37502051                             
+}
+
+for n in range(1,len(sys.argv)):
+    with open(sys.argv[n], "r") as data:
+        for line in data:
+            num_chr = int(line.split()[0][-4:-2])-11
+            start = int(line.split()[1])
+            end = int(line.split()[2])
+            if num_chr not in chr:
+                chr[num_chr] = end - start
+            else:
+                chr[num_chr] += end - start
+
+for el in sorted(chr.keys()):
+    z = chr[el]*100/danRer11[el]
+    print(el,round(z,4))
