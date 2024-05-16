@@ -1,0 +1,17 @@
+chrs=[]
+for i in range(12,37):
+    chrs.append("NC_0071"+ str(i) + ".7")
+chrs.append('NC_002333.2')
+
+sizes = [59578282,59640629,62628489,78093715,72500376,60270059,74282399,54304671,56459846,45420867,45484837,49182954,52186027,52660232,48040578,55266484,53461100,51023478,48449771,55201332,45934066,39133080,46223584,42172926,37502051,16596]
+    
+genome = dict(zip(chrs,sizes))
+
+for i,j in genome.items():
+    print(i,j,sep=' ',end='\n')
+
+with open("chrom-buckets.GRCz11.bed", "w") as file:
+    for name,size in genome.items():
+        for j in range(0,size-150,20):
+            file.write(name+'\t'+str(j)+'\t'+str(j+150)+'\n')
+        
