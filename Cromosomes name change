@@ -1,0 +1,24 @@
+#!/bin/bash
+
+## script for chromosome name changing from 1-25 to NC_007112.7-NC_007136.7
+
+input_file="Danio_rerio.GRCz11.111.gtf"
+output_file="Danio_rerio.GRCz11.111.NCnames.gtf"
+
+replace_1_9=(NC_007112.7 NC_007113.7 NC_007114.7 NC_007115.7 NC_007116.7 NC_007117.7 NC_007118.7 NC_007119.7 NC_007120.7)
+replace_10_25=(NC_007121.7 NC_007122.7 NC_007123.7 NC_007124.7 NC_007125.7 NC_007126.7 NC_007127.7 NC_007128.7 NC_007129.7 NC_007130.7 NC_007131.7 NC_007132.7 NC_007133.7 NC_007134.7 NC_007135.7 NC_007136.7)
+
+temp_file=$(mktemp)
+
+cp "$input_file" "$temp_file"
+for i in {1..9}; do
+    sed -i "s/^${i}\b/${replace_1_9[$((i-1))]}/" "$temp_file"
+done
+
+for i in {10..25}; do
+    sed -i "s/^${i}\b/${replace_10_25[$((i-10))]}/" "$temp_file"
+done
+
+mv "$temp_file" "$output_file"
+
+echo "All done, results in $output_file"
