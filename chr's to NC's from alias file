@@ -1,0 +1,18 @@
+names = dict()
+
+with open('danRer11.chromAlias.txt','r') as alias:
+    line = alias.readline()
+    while line:
+        if len(line.split())==3:
+            names[line.split()[0]]=line.split()[2]
+        else:
+            names[line.split()[0]]=line.split()[3]
+        line = alias.readline()
+        
+        
+with open('pigment_cells_all_genes.bed') as genes:
+    with open('result.bed','w') as result:
+        line = genes.readline()
+        while line:
+            result.write(names[line.split()[0]]+'\t'+'\t'.join(line.split()[1:])+'\n')
+            line = genes.readline()
