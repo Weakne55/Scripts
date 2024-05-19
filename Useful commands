@@ -9,3 +9,14 @@ awk '{print $1 "\t" $6 "\t" $7 "\t" $4}'
 # get lines with value in 5 row more then 5
 
 awk -F'\t' '$5 > 5' your_file
+
+#  Take bed output from sarus and transform into extendex bed for multifasta
+
+NC_007117.7 32093873 32093884 MITF.H12CORE.0.P.B;NC_007117.7:32092420-32094380 6.622659904607587 +
+
+      |    |    |
+      v    v    v
+
+NC_007117  32092420  32094380  6.622659904607587  +
+
+awk '{split($4, a, "[;:]"); split(a[3], b, "-"); print $1 "\t" b[1] "\t" b[2] "\t" $5 "\t" $6}'
