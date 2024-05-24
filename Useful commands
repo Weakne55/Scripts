@@ -24,3 +24,7 @@ awk '{split($4, a, "[;:]"); split(a[3], b, "-"); print $1 "\t" b[1] "\t" b[2] "\
 # get saf from narrowPeak/gappedPeak
 
 awk -F $'\t' 'BEGIN {OFS = FS}{ $2=$2+1; peakid="Peak_"++nr;  print peakid,$1,$2,$3,"."}' file.narrowPeak > file.saf
+
+# get unique lines by 1 of rows. N - number of line
+awk '{count[$N]++; lines[$N]=$0} END {for (i in count) if (count[i]==1) print lines[i]}' data.txt
+
