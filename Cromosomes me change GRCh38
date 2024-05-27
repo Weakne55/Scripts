@@ -16,7 +16,7 @@ done
 
 sed -i "s/^chrX\b/${replace_10_25[23]}/" "$temp_file"
 sed -i "s/^chrY\b/${replace_10_25[24]}/" "$temp_file"
-sed -i "s/^chrY\b/${replace_10_25[25]}/" "$temp_file"
+sed -i "s/^chrM\b/${replace_10_25[25]}/" "$temp_file"
 
 
 
