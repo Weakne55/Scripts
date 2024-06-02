@@ -1,0 +1,11 @@
+sample,fastq_1,fastq_2,replicate,single_end
+SRR15321078_REP1_T1,omni-atac/SRR15321078_1.fastq.gz,omni-atac/SRR15321078_2.fastq.gz,1,0
+
+
+input: './samplesheet75.csv'
+outdir: './ATAC-data/SRR15321075/'
+fasta: './DanRer11/GCF_000002035.6_GRCz11_genomic.fna' 
+read_length: 200
+gtf: './DanRer11/Danio_rerio.GRCz11.111.NCnames.gtf'
+narrow_peak: True
+skip_peak_annotation: True
