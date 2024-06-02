@@ -1,0 +1,45 @@
+sample,fastq_1,fastq_2,replicate
+SRR15321075,ATAC-raw-data/SRR15321075_1.fastq.gz,ATAC-raw-data/SRR15321075_2.fastq.gz,1
+
+
+input: './samplesheet75.csv'
+outdir: './ATAC-data/SRR15321075/'
+fasta: './DanRer11/GCF_000002035.6_GRCz11_genomic.fna' 
+read_length: 200
+gtf: './DanRer11/Danio_rerio.GRCz11.111.NCnames.gtf'
+narrow_peak: True
+skip_peak_annotation: True
+
+
+nextflow run nf-core/atacseq -profile docker -params-file SRR75.yaml
+
+java -jar ~/actual/HMMRATAC_V1.2.10_exe.jar -b SRR15321075_REP1.mLb.clN.sorted.bam -i SRR15321075_REP1.mLb.clN.sorted.bam.bai -g ~/actual/genome.info --minlen 100 —threshold 60 -o SRR15321075_min100_threshold40
+
+mv SRR15321075_min100_threshold40_peaks.gappedPeak ~/actual/ss15
+mv SRR15321074.threshold40_peaks.gappedPeak ~/actual/ss15
+
+awk '{print $1 "\t" $7 "\t" $8 "\t" $4}' SRR15321075_min100_threshold40_peaks.gappedPeak > SRR15321075.narrowPeak
+
+awk '{print $1 "\t" $7 "\t" $8 "\t" $4}' SRR15321074.threshold40_peaks.gappedPeak > SRR15321074.narrowPeak
+
+mv SRR15321075.narrowPeak SRR15321075.narrowPeak.tmp
+sed '$d' SRR15321075.narrowPeak.tmp > SRR15321075.narrowPeak 
+
+mv SRR15321074.narrowPeak SRR15321074.narrowPeak.tmp
+sed '$d' SRR15321074.narrowPeak.tmp > SRR15321074.narrowPeak
+
+rm SRR15321074.narrowPeak.tmp SRR15321075.narrowPeak.tmp
+  
+bedtools intersect -a SRR15321074.narrowPeak -b SRR15321075.narrowPeak > intersect_ss15.bed 
+
+bedtools intersect -a intersect_ss15.bed -b pigment_genes.sorted.bed -wo -f 0.1 > intersect_pigment_15ss.bed 
+
+wc -l intersect_pigment_15ss.uniq.bed  - amount of peaks near ours genes
+
+here we need to choose first and last of all coord in row and chrom name
+
+awk '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $8}' intersect_pigment_ss15.bed  | sort -k3,3 -u  > intersect_pigment_ss15.uniq.bed
+
+awk '{print $1 "\t" $2 "\t" $3 "\t" $4"-"$5}' intersect_pigment_15ss.uniq.bed > intersect_pigment_15ss.names.bed
+
+
