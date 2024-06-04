@@ -42,4 +42,6 @@ awk '{print $1 "\t" $2 "\t" $3 "\t" $4 "\t" $8}' intersect_pigment_ss15.bed  | s
 
 awk '{print $1 "\t" $2 "\t" $3 "\t" $4"-"$5}' intersect_pigment_15ss.uniq.bed > intersect_pigment_15ss.names.bed
 
+bedtools getfasta -fi ~/actual/DanRer11/GCF_000002035.6_GRCz11_genomic.fna -bed intersect_pigment_15ss.names.bed -name > intersect_pigment_15ss.names.mfa
+
 
