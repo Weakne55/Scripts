@@ -50,3 +50,5 @@ java -jar ~/actual/sarus-2.1.0.jar intersect_pigment_15ss.names.mfa ~/actual/pwm
 wms/MITF/MITF.H12CORE.0.P.B.thr --output-scoring-mode logpvalue --output-bed > 15ss.mitf.bed
 
 cat 15ss.mitf.bed | awk '{split($4, a, ";"); split(a[2], b, ":"); split(b[2], c, "-"); print $1, c[1], c[2], b[4], $2, $3, a[1], $5, $6}' | sed s/" "/'\t'/g > 15ss.MITF.logpvalue.bed
+
+awk '{print $1,$2,$3,$4,$8*100,$9,$5,$6}' 15ss.MITF.logpvalue.bed | sed 's/ /\t/g' > 15ss.MITF.logpvalue.gappedPeak - ПЕРЕДЕЛАТЬ ПРОШЛУЮ КОМАНДУ ПОД ЭТУ!!!! 
