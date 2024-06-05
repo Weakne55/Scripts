@@ -1,0 +1,8 @@
+#!/bin/bash
+
+for pwm in $(ls pwms)
+do
+var=($(ls "pwms/"$pwm))
+#echo ${var[0]} ${var[1]}
+$(java -jar ~/actual/sarus-2.1.0.jar intersect_pigment_15ss.names.mfa "pwms/"$pwm$"/"${var[0]} besthit --pvalues-file "pwms/"$pwm"/"${var[1]} --output-scoring-mode logpvalue --output-bed > "15ss."$pwm".bed")
+done
