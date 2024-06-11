@@ -13,7 +13,7 @@ skip_peak_annotation: True
 
 nextflow run nf-core/atacseq -profile docker -params-file SRR75.yaml
 
-java -jar ~/actual/HMMRATAC_V1.2.10_exe.jar -b SRR15321075_REP1.mLb.clN.sorted.bam -i SRR15321075_REP1.mLb.clN.sorted.bam.bai -g ~/actual/genome.info --minlen 100 —threshold 60 -o SRR15321075_min100_threshold40
+java -jar ~/actual/HMMRATAC_V1.2.10_exe.jar -b SRR15321075_REP1.mLb.clN.sorted.bam -i SRR15321075_REP1.mLb.clN.sorted.bam.bai -g ~/actual/genome.info --minlen 100 —threshold 40 -o SRR15321075_min100_threshold40
 
 mv SRR15321075_min100_threshold40_peaks.gappedPeak ~/actual/ss15
 mv SRR15321074.threshold40_peaks.gappedPeak ~/actual/ss15
