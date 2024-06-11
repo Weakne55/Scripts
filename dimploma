@@ -66,3 +66,11 @@ NC_007117.7	43384960	43385560	XM_021476775.1	.	-	43385163	43385183	255,0,0	3	1,2
 awk '{print $1,$2,$3,$7,".",$9,$5,$6,"255,0,0","3","1,"$6-$5",1","0,"$5-$2","$3-$2-1, $8}' 15ss.MITF.logpvalue.bed | sed s/' '/'\t'/g > 15ss.MITF.logpvalue.gappedPeak
 
 для всех файлов будет скрипт bedtogapped.sh
+
+cat *.gappedPeak > 15ss.TFBS.logpvalue.gappedPeak
+
+sort -r -k 13,13 15ss.TFBS.logpvalue.gappedPeak | head -58 > 15ss.TFBS.logpvalue5.gappedPeak - нужно переписать команду чтобы она брала значения выше 5 в строке 13, а не как я руками наше
+
+sort -r -k2,2n 15ss.TFBS.logpvalue5.gappedPeak > 15ss.TFBS.logpvalue5.sorted.gappedPeak - отсортировали значения по 2 столбцу
+
+lions.py 15ss.TFBS.logpvalue5.sorted.gappedPeak > 15ss.TFBS.sequences.gappedPeak
