@@ -14,5 +14,6 @@ $(cat $name"."$pwm".logpvalue.gappedPeak" >> $name".TFBS.logpvalue.gappedPeak")
 mv $name"."$pwm".bed" $name"/sarus_output"  
 mv $name"."$pwm".logpvalue.bed" $name"/pwm_logpvalue" 
 mv $name"."$pwm".logpvalue.gappedPeak" $name"/gappedPeak"
-mv $name".TFBS.logpvalue.gappedPeak" $name"/"
 done
+
+mv $name".TFBS.logpvalue.gappedPeak" $name"/"
