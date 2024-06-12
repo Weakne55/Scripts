@@ -54,13 +54,6 @@ bedtools getfasta -fi ~/actual/DanRer11/GCF_000002035.6_GRCz11_genomic.fna -bed 
 # script for sarus usage 
 ./sarus_scores.sh intersect_pigment_24hpf.names.mfa
 
-
-awk '{print $1,$2,$3,$7,".",$9,$5,$6,"255,0,0","3","1,"$6-$5",1","0,"$5-$2","$3-$2-1, $8}' 15ss.MITF.logpvalue.bed | sed s/' '/'\t'/g > 15ss.MITF.logpvalue.gappedPeak
-
-для всех файлов будет скрипт bedtogapped.sh
-
-cat *.gappedPeak > 15ss.TFBS.logpvalue.gappedPeak
-
 sort -r -k 13,13 15ss.TFBS.logpvalue.gappedPeak | head -58 > 15ss.TFBS.logpvalue5.gappedPeak - нужно переписать команду чтобы она брала значения выше 5 в строке 13, а не как я руками наше
 
 sort -r -k2,2n 15ss.TFBS.logpvalue5.gappedPeak > 15ss.TFBS.logpvalue5.sorted.gappedPeak - отсортировали значения по 2 столбцу
