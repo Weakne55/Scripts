@@ -51,13 +51,7 @@ awk '{print $1 "\t" $2 "\t" $3 "\t" $1":"$2"-"$3":"$4":"$5}' intersect_pigment_1
 # get fasta sequences for sarus
 bedtools getfasta -fi ~/actual/DanRer11/GCF_000002035.6_GRCz11_genomic.fna -bed intersect_pigment_15ss.names.bed -name > intersect_pigment_15ss.names.mfa
 
-# find pvalues for peak
-java -jar ~/actual/sarus-2.1.0.jar intersect_pigment_15ss.names.mfa ~/actual/pwms/MITF/MITF.H12CORE.0.P.B.pwm besthit --pvalues-file p
-wms/MITF/MITF.H12CORE.0.P.B.thr --output-scoring-mode logpvalue --output-bed > 15ss.mitf.bed
-
-cat 15ss.mitf.bed | awk '{split($4, a, ";"); split(a[2], b, ":"); split(b[2], c, "-"); print $1, c[1], c[2], b[4], $2, $3, a[1], $5, $6}' | sed s/" "/'\t'/g > 15ss.MITF.logpvalue.bed
-
-# script for sarus usage and 
+# script for sarus usage 
 ./sarus_scores.sh intersect_pigment_24hpf.names.mfa
 
 awk '{print $1,$2,$3,$4,$8,$9,$5,$6}' 15ss.MITF.logpvalue.bed | sed 's/ /\t/g' > 15ss.MITF.logpvalue.gappedPeak - ПЕРЕДЕЛАТЬ ПРОШЛУЮ КОМАНДУ ПОД ЭТУ!!!! 
