@@ -52,10 +52,19 @@ awk '{print $1 "\t" $2 "\t" $3 "\t" $1":"$2"-"$3":"$4":"$5}' intersect_pigment_1
 bedtools getfasta -fi ~/actual/DanRer11/GCF_000002035.6_GRCz11_genomic.fna -bed intersect_pigment_15ss.names.bed -name > intersect_pigment_15ss.names.mfa
 
 # script for sarus usage 
-./sarus_scores.sh intersect_pigment_24hpf.names.mfa
+./sarus_scores.sh intersect_pigment_15ss.names.mfa
 
-sort -r -k 13,13 15ss.TFBS.logpvalue.gappedPeak | head -58 > 15ss.TFBS.logpvalue5.gappedPeak - нужно переписать команду чтобы она брала значения выше 5 в строке 13, а не как я руками наше
+# get all peaks with pvalue more than 5
+awk '$13 > 5' 15ss.TFBS.logpvalue.gappedPeak | sort -k 13,13rn > 15ss.TFBS.logpvalue5.gappedPeak
 
-sort -r -k2,2n 15ss.TFBS.logpvalue5.gappedPeak > 15ss.TFBS.logpvalue5.sorted.gappedPeak - отсортировали значения по 2 столбцу
+# sort peaks by peaks start for lions.py script
+sort -k2,2rn 15ss.TFBS.logpvalue5.gappedPeak > 15ss.TFBS.logpvalue5.sorted.gappedPeak
 
-lions.py 15ss.TFBS.logpvalue5.sorted.gappedPeak > 15ss.TFBS.sequences.gappedPeak
+# get TFBS in useful manner
+python3 lions.py 15ss.TFBS.logpvalue5.sorted.gappedPeak > 15ss.TFBS.sequences.gappedPeak
+
+example output 
+
+NC_007115.7     17014560        17015550        SOX10.SOX9.FOXD3        .       .       0       0       255,0,0 5       1,23,21,20,1   0,212,213,223,989       .       16.53302992597529
+NC_007129.7     38288350        38289410        SOX10.SOX9.MITF.SNAI1   .       .       0       0       255,0,0 6       1,23,21,11,12,1        0,120,121,442,886,1059  .       23.676372820051093
+NC_007114.7     46810550        46812600        SOX9    .       -       46810809        46810830        255,0,0 3       1,21,1 0,259,2049      .       5.123503352839895
